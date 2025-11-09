@@ -34,10 +34,30 @@ if "[ENHANCED BY STACKCRAFT]" in prompt:
     output_json(prompt)
     sys.exit(0)
 
-# Simple vague prompt detection
+# Enhanced vague prompt detection for production
 words = prompt.split()
-vague_starters = ["make", "create", "build", "fix", "add", "help", "debug", "test", "write", "update", "change"]
-is_vague = len(words) < 8 and any(prompt.lower().startswith(starter) for starter in vague_starters)
+vague_starters = ["make", "create", "build", "fix", "add", "help", "debug", "test", "write", "update", "change", "implement", "setup", "configure"]
+
+# Check if prompt starts with a vague action word
+starts_with_vague = any(prompt.lower().startswith(starter) for starter in vague_starters)
+
+# Count specific technical details (keywords that suggest specificity)
+specific_indicators = ["class", "function", "method", "component", "api", "endpoint", "route", "model", "schema",
+                       "database", "query", "import", "export", "render", "fetch", "axios", "react", "vue",
+                       "angular", "node", "python", "java", "typescript", "javascript", "sql", "nosql",
+                       "authentication", "authorization", "jwt", "oauth", "redux", "vuex", "graphql", "rest",
+                       "server", "client", "backend", "frontend", "interface", "service", "controller",
+                       ".js", ".py", ".ts", ".tsx", ".jsx", ".java", ".go", ".rs", ".cpp"]
+
+# Count how many specific indicators are present
+specificity_score = sum(1 for indicator in specific_indicators if indicator in prompt.lower())
+
+# Enhanced detection logic:
+# Trigger enhancement if:
+# - Starts with vague word AND has very low specificity (< 2 technical terms)
+# - AND is relatively short (< 15 words)
+# This catches "make a website" and "make a simple server..." but NOT "implement OAuth authentication using JWT"
+is_vague = starts_with_vague and specificity_score < 2 and len(words) < 15
 
 # Pass through if not vague
 if not is_vague:

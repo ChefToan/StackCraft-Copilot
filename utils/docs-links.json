@@ -1,0 +1,413 @@
+{
+  "frameworks": {
+    "react": {
+      "name": "React",
+      "docs": "https://react.dev/",
+      "getStarted": "https://react.dev/learn",
+      "apiReference": "https://react.dev/reference/react"
+    },
+    "nextjs": {
+      "name": "Next.js",
+      "docs": "https://nextjs.org/docs",
+      "getStarted": "https://nextjs.org/learn",
+      "apiReference": "https://nextjs.org/docs/app/api-reference"
+    },
+    "vue": {
+      "name": "Vue.js",
+      "docs": "https://vuejs.org/",
+      "getStarted": "https://vuejs.org/guide/introduction.html",
+      "apiReference": "https://vuejs.org/api/"
+    },
+    "nuxt": {
+      "name": "Nuxt",
+      "docs": "https://nuxt.com/docs",
+      "getStarted": "https://nuxt.com/docs/getting-started/introduction",
+      "apiReference": "https://nuxt.com/docs/api"
+    },
+    "angular": {
+      "name": "Angular",
+      "docs": "https://angular.dev/",
+      "getStarted": "https://angular.dev/tutorials/learn-angular",
+      "apiReference": "https://angular.dev/api"
+    },
+    "svelte": {
+      "name": "Svelte",
+      "docs": "https://svelte.dev/",
+      "getStarted": "https://svelte.dev/tutorial",
+      "apiReference": "https://svelte.dev/docs"
+    },
+    "sveltekit": {
+      "name": "SvelteKit",
+      "docs": "https://kit.svelte.dev/",
+      "getStarted": "https://kit.svelte.dev/docs/introduction",
+      "apiReference": "https://kit.svelte.dev/docs"
+    },
+    "remix": {
+      "name": "Remix",
+      "docs": "https://remix.run/docs",
+      "getStarted": "https://remix.run/docs/en/main/start/quickstart",
+      "apiReference": "https://remix.run/docs/en/main/guides/api-routes"
+    },
+    "astro": {
+      "name": "Astro",
+      "docs": "https://docs.astro.build/",
+      "getStarted": "https://docs.astro.build/en/getting-started/",
+      "apiReference": "https://docs.astro.build/en/reference/api-reference/"
+    },
+    "gatsby": {
+      "name": "Gatsby",
+      "docs": "https://www.gatsbyjs.com/docs/",
+      "getStarted": "https://www.gatsbyjs.com/docs/tutorial/",
+      "apiReference": "https://www.gatsbyjs.com/docs/reference/"
+    }
+  },
+  "uiComponentLibraries": {
+    "shadcn": {
+      "name": "shadcn/ui",
+      "docs": "https://ui.shadcn.com/",
+      "getStarted": "https://ui.shadcn.com/docs/installation",
+      "components": "https://ui.shadcn.com/docs/components",
+      "builtWith": ["radix-ui", "tailwind", "cva"]
+    },
+    "radix": {
+      "name": "Radix UI",
+      "docs": "https://www.radix-ui.com/",
+      "getStarted": "https://www.radix-ui.com/primitives/docs/overview/getting-started",
+      "primitives": "https://www.radix-ui.com/primitives/docs/overview/introduction"
+    },
+    "headlessui": {
+      "name": "Headless UI",
+      "docs": "https://headlessui.com/",
+      "getStarted": "https://headlessui.com/react/menu",
+      "components": "https://headlessui.com/"
+    },
+    "mui": {
+      "name": "Material-UI (MUI)",
+      "docs": "https://mui.com/",
+      "getStarted": "https://mui.com/material-ui/getting-started/",
+      "components": "https://mui.com/material-ui/all-components/"
+    },
+    "antd": {
+      "name": "Ant Design",
+      "docs": "https://ant.design/",
+      "getStarted": "https://ant.design/docs/react/introduce",
+      "components": "https://ant.design/components/overview/"
+    },
+    "chakra": {
+      "name": "Chakra UI",
+      "docs": "https://chakra-ui.com/docs",
+      "getStarted": "https://chakra-ui.com/docs/getting-started",
+      "components": "https://chakra-ui.com/docs/components"
+    },
+    "mantine": {
+      "name": "Mantine",
+      "docs": "https://mantine.dev/",
+      "getStarted": "https://mantine.dev/getting-started/",
+      "components": "https://mantine.dev/core/app-shell/"
+    },
+    "nextui": {
+      "name": "NextUI",
+      "docs": "https://nextui.org/",
+      "getStarted": "https://nextui.org/docs/guide/introduction",
+      "components": "https://nextui.org/docs/components/button"
+    },
+    "daisyui": {
+      "name": "DaisyUI",
+      "docs": "https://daisyui.com/",
+      "getStarted": "https://daisyui.com/docs/install/",
+      "components": "https://daisyui.com/components/"
+    },
+    "reactaria": {
+      "name": "React Aria (Adobe)",
+      "docs": "https://react-spectrum.adobe.com/react-aria/",
+      "getStarted": "https://react-spectrum.adobe.com/react-aria/getting-started.html",
+      "components": "https://react-spectrum.adobe.com/react-aria/components.html"
+    },
+    "tremor": {
+      "name": "Tremor",
+      "docs": "https://www.tremor.so/",
+      "getStarted": "https://www.tremor.so/docs/getting-started/installation",
+      "components": "https://www.tremor.so/docs/visualizations/area-chart"
+    },
+    "parkui": {
+      "name": "Park UI",
+      "docs": "https://park-ui.com/",
+      "getStarted": "https://park-ui.com/docs/overview/introduction",
+      "components": "https://park-ui.com/docs/components"
+    }
+  },
+  "cssFrameworks": {
+    "tailwind": {
+      "name": "Tailwind CSS",
+      "docs": "https://tailwindcss.com/docs",
+      "getStarted": "https://tailwindcss.com/docs/installation",
+      "utilities": "https://tailwindcss.com/docs/utility-first"
+    },
+    "bootstrap": {
+      "name": "Bootstrap",
+      "docs": "https://getbootstrap.com/docs/",
+      "getStarted": "https://getbootstrap.com/docs/5.3/getting-started/introduction/",
+      "components": "https://getbootstrap.com/docs/5.3/components/alerts/"
+    },
+    "bulma": {
+      "name": "Bulma",
+      "docs": "https://bulma.io/documentation/",
+      "getStarted": "https://bulma.io/documentation/overview/start/",
+      "components": "https://bulma.io/documentation/components/"
+    },
+    "foundation": {
+      "name": "Foundation",
+      "docs": "https://get.foundation/sites/docs/",
+      "getStarted": "https://get.foundation/sites/docs/installation.html",
+      "components": "https://get.foundation/sites/docs/accordion.html"
+    }
+  },
+  "cssInJs": {
+    "styledcomponents": {
+      "name": "styled-components",
+      "docs": "https://styled-components.com/docs",
+      "getStarted": "https://styled-components.com/docs/basics",
+      "advanced": "https://styled-components.com/docs/advanced"
+    },
+    "emotion": {
+      "name": "Emotion",
+      "docs": "https://emotion.sh/docs/introduction",
+      "getStarted": "https://emotion.sh/docs/install",
+      "styling": "https://emotion.sh/docs/styled"
+    },
+    "stitches": {
+      "name": "Stitches",
+      "docs": "https://stitches.dev/",
+      "getStarted": "https://stitches.dev/docs/installation",
+      "styling": "https://stitches.dev/docs/styling"
+    },
+    "vanillaextract": {
+      "name": "Vanilla Extract",
+      "docs": "https://vanilla-extract.style/",
+      "getStarted": "https://vanilla-extract.style/documentation/getting-started/",
+      "api": "https://vanilla-extract.style/documentation/api/"
+    },
+    "panda": {
+      "name": "Panda CSS",
+      "docs": "https://panda-css.com/",
+      "getStarted": "https://panda-css.com/docs/installation",
+      "concepts": "https://panda-css.com/docs/concepts"
+    }
+  },
+  "stateManagement": {
+    "redux": {
+      "name": "Redux",
+      "docs": "https://redux.js.org/",
+      "getStarted": "https://redux.js.org/introduction/getting-started",
+      "toolkit": "https://redux-toolkit.js.org/"
+    },
+    "zustand": {
+      "name": "Zustand",
+      "docs": "https://zustand-demo.pmnd.rs/",
+      "getStarted": "https://docs.pmnd.rs/zustand/getting-started/introduction",
+      "recipes": "https://docs.pmnd.rs/zustand/guides/practice-with-no-store-actions"
+    },
+    "mobx": {
+      "name": "MobX",
+      "docs": "https://mobx.js.org/",
+      "getStarted": "https://mobx.js.org/getting-started.html",
+      "react": "https://mobx.js.org/react-integration.html"
+    },
+    "jotai": {
+      "name": "Jotai",
+      "docs": "https://jotai.org/",
+      "getStarted": "https://jotai.org/docs/introduction",
+      "api": "https://jotai.org/docs/core/atom"
+    },
+    "recoil": {
+      "name": "Recoil",
+      "docs": "https://recoiljs.org/",
+      "getStarted": "https://recoiljs.org/docs/introduction/getting-started",
+      "api": "https://recoiljs.org/docs/api-reference/core/atom"
+    },
+    "valtio": {
+      "name": "Valtio",
+      "docs": "https://valtio.pmnd.rs/",
+      "getStarted": "https://valtio.pmnd.rs/docs/introduction/getting-started",
+      "api": "https://valtio.pmnd.rs/docs/api/basic/proxy"
+    },
+    "xstate": {
+      "name": "XState",
+      "docs": "https://xstate.js.org/",
+      "getStarted": "https://xstate.js.org/docs/",
+      "machines": "https://xstate.js.org/docs/guides/machines.html"
+    }
+  },
+  "buildTools": {
+    "webpack": {
+      "name": "Webpack",
+      "docs": "https://webpack.js.org/",
+      "getStarted": "https://webpack.js.org/guides/getting-started/",
+      "concepts": "https://webpack.js.org/concepts/"
+    },
+    "vite": {
+      "name": "Vite",
+      "docs": "https://vitejs.dev/",
+      "getStarted": "https://vitejs.dev/guide/",
+      "config": "https://vitejs.dev/config/"
+    },
+    "parcel": {
+      "name": "Parcel",
+      "docs": "https://parceljs.org/",
+      "getStarted": "https://parceljs.org/getting-started/webapp/",
+      "recipes": "https://parceljs.org/recipes/"
+    },
+    "turbopack": {
+      "name": "Turbopack",
+      "docs": "https://turbo.build/pack",
+      "getStarted": "https://turbo.build/pack/docs",
+      "features": "https://turbo.build/pack/docs/features"
+    },
+    "esbuild": {
+      "name": "esbuild",
+      "docs": "https://esbuild.github.io/",
+      "getStarted": "https://esbuild.github.io/getting-started/",
+      "api": "https://esbuild.github.io/api/"
+    },
+    "rollup": {
+      "name": "Rollup",
+      "docs": "https://rollupjs.org/",
+      "getStarted": "https://rollupjs.org/tutorial/",
+      "configuration": "https://rollupjs.org/configuration-options/"
+    }
+  },
+  "dataFetching": {
+    "reactquery": {
+      "name": "TanStack Query (React Query)",
+      "docs": "https://tanstack.com/query/latest",
+      "getStarted": "https://tanstack.com/query/latest/docs/framework/react/overview",
+      "guides": "https://tanstack.com/query/latest/docs/framework/react/guides/queries"
+    },
+    "swr": {
+      "name": "SWR",
+      "docs": "https://swr.vercel.app/",
+      "getStarted": "https://swr.vercel.app/docs/getting-started",
+      "options": "https://swr.vercel.app/docs/api"
+    },
+    "apollo": {
+      "name": "Apollo Client",
+      "docs": "https://www.apollographql.com/docs/react/",
+      "getStarted": "https://www.apollographql.com/docs/react/get-started/",
+      "queries": "https://www.apollographql.com/docs/react/data/queries/"
+    },
+    "axios": {
+      "name": "Axios",
+      "docs": "https://axios-http.com/",
+      "getStarted": "https://axios-http.com/docs/intro",
+      "api": "https://axios-http.com/docs/api_intro"
+    }
+  },
+  "formLibraries": {
+    "reacthookform": {
+      "name": "React Hook Form",
+      "docs": "https://react-hook-form.com/",
+      "getStarted": "https://react-hook-form.com/get-started",
+      "api": "https://react-hook-form.com/docs"
+    },
+    "formik": {
+      "name": "Formik",
+      "docs": "https://formik.org/",
+      "getStarted": "https://formik.org/docs/overview",
+      "tutorial": "https://formik.org/docs/tutorial"
+    },
+    "tanstackform": {
+      "name": "TanStack Form",
+      "docs": "https://tanstack.com/form/latest",
+      "getStarted": "https://tanstack.com/form/latest/docs/framework/react/quick-start",
+      "guides": "https://tanstack.com/form/latest/docs/framework/react/guides/basic-concepts"
+    }
+  },
+  "animation": {
+    "framermotion": {
+      "name": "Framer Motion",
+      "docs": "https://www.framer.com/motion/",
+      "getStarted": "https://www.framer.com/motion/introduction/",
+      "animation": "https://www.framer.com/motion/animation/"
+    },
+    "gsap": {
+      "name": "GSAP (GreenSock)",
+      "docs": "https://greensock.com/docs/",
+      "getStarted": "https://greensock.com/get-started/",
+      "plugins": "https://greensock.com/docs/v3/Plugins"
+    },
+    "reactspring": {
+      "name": "React Spring",
+      "docs": "https://www.react-spring.dev/",
+      "getStarted": "https://www.react-spring.dev/docs/getting-started",
+      "hooks": "https://www.react-spring.dev/docs/components/use-spring"
+    },
+    "animejs": {
+      "name": "Anime.js",
+      "docs": "https://animejs.com/documentation/",
+      "getStarted": "https://animejs.com/documentation/#gettingStarted",
+      "examples": "https://animejs.com/documentation/#basicAnimations"
+    }
+  },
+  "utilities": {
+    "clsx": {
+      "name": "clsx",
+      "docs": "https://github.com/lukeed/clsx",
+      "npm": "https://www.npmjs.com/package/clsx"
+    },
+    "classnames": {
+      "name": "classnames",
+      "docs": "https://github.com/JedWatson/classnames",
+      "npm": "https://www.npmjs.com/package/classnames"
+    },
+    "cva": {
+      "name": "Class Variance Authority (cva)",
+      "docs": "https://cva.style/",
+      "getStarted": "https://cva.style/docs",
+      "npm": "https://www.npmjs.com/package/class-variance-authority"
+    },
+    "cmdk": {
+      "name": "cmdk",
+      "docs": "https://cmdk.paco.me/",
+      "github": "https://github.com/pacocoursey/cmdk",
+      "npm": "https://www.npmjs.com/package/cmdk"
+    },
+    "sonner": {
+      "name": "Sonner",
+      "docs": "https://sonner.emilkowal.ski/",
+      "github": "https://github.com/emilkowalski/sonner",
+      "npm": "https://www.npmjs.com/package/sonner"
+    }
+  },
+  "testing": {
+    "jest": {
+      "name": "Jest",
+      "docs": "https://jestjs.io/",
+      "getStarted": "https://jestjs.io/docs/getting-started",
+      "api": "https://jestjs.io/docs/api"
+    },
+    "vitest": {
+      "name": "Vitest",
+      "docs": "https://vitest.dev/",
+      "getStarted": "https://vitest.dev/guide/",
+      "api": "https://vitest.dev/api/"
+    },
+    "cypress": {
+      "name": "Cypress",
+      "docs": "https://docs.cypress.io/",
+      "getStarted": "https://docs.cypress.io/guides/getting-started/installing-cypress",
+      "api": "https://docs.cypress.io/api/table-of-contents"
+    },
+    "playwright": {
+      "name": "Playwright",
+      "docs": "https://playwright.dev/",
+      "getStarted": "https://playwright.dev/docs/intro",
+      "api": "https://playwright.dev/docs/api/class-playwright"
+    },
+    "testinglibrary": {
+      "name": "Testing Library",
+      "docs": "https://testing-library.com/",
+      "react": "https://testing-library.com/docs/react-testing-library/intro/",
+      "queries": "https://testing-library.com/docs/queries/about/"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "stack-detective",
+  "displayName": "Stack Detective",
+  "description": "Advanced tech stack analyzer that detects frameworks, libraries, CSS approaches, and architectural patterns from live websites",
+  "systemPromptPath": "./system-prompt.md",
+  "model": "claude-sonnet-4-5-20250929",
+  "tools": [
+    "WebFetch",
+    "Grep",
+    "Read"
+  ],
+  "capabilities": {
+    "frameworkDetection": true,
+    "cssAnalysis": true,
+    "stateManagementDetection": true,
+    "buildToolIdentification": true,
+    "documentationLinking": true
+  },
+  "config": {
+    "temperature": 0.3,
+    "maxTokens": 8000,
+    "analytical": true
+  }
+}

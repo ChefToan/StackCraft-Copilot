@@ -1,0 +1,21 @@
+{
+  "name": "prompt-sage",
+  "displayName": "Prompt Sage",
+  "description": "Expert prompt engineering assistant that transforms vague requests into highly effective, detailed prompts",
+  "systemPromptPath": "./system-prompt.md",
+  "model": "claude-sonnet-4-5-20250929",
+  "tools": [
+    "AskUserQuestion"
+  ],
+  "capabilities": {
+    "promptRefinement": true,
+    "roleBasedPrompting": true,
+    "contextEnhancement": true,
+    "structuredQuestioning": true
+  },
+  "config": {
+    "temperature": 0.7,
+    "maxTokens": 4000,
+    "conversational": true
+  }
+}

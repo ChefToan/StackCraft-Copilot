@@ -14,6 +14,9 @@ docs/
 DEMO_GUIDE.md
 HACKATHON_CHECKLIST.md
 
+# Development marketplace (keep production .claude-plugin/)
+.dev-marketplace/
+
 # OS files
 .DS_Store
 .DS_Store?

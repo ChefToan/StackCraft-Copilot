@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "stackcraft-copilot",
-      "source": "https://github.com/ChefToan/StackCraft-Copilot.git"
+      "source": "./"
     }
   ]
 }

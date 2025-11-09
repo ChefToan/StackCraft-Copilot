@@ -182,9 +182,25 @@ server.registerTool(
     try {
       const result = await enhancePrompt(prompt, template);
 
-      // Format result as markdown
+      // Helper function to safely escape content for markdown code blocks
+      const escapeForMarkdown = (text) => {
+        // If text contains triple backticks, use alternative code block format
+        if (text.includes('```')) {
+          return text; // Return as-is, will use indented code block
+        }
+        return text;
+      };
+
+      // Format result as markdown with proper escaping
       let markdown = `# Prompt Enhancement Results\n\n`;
-      markdown += `## Original Prompt\n\`\`\`\n${result.original}\n\`\`\`\n\n`;
+
+      // Original prompt
+      const originalEscaped = escapeForMarkdown(result.original);
+      if (originalEscaped.includes('```')) {
+        markdown += `## Original Prompt\n${result.original}\n\n`;
+      } else {
+        markdown += `## Original Prompt\n\`\`\`\n${result.original}\n\`\`\`\n\n`;
+      }
 
       if (result.needsClarification) {
         markdown += `## Clarification Needed\n\n`;
@@ -193,7 +209,14 @@ server.registerTool(
           markdown += `${i + 1}. ${q}\n`;
         });
       } else {
-        markdown += `## Enhanced Prompt\n\`\`\`\n${result.enhanced.prompt}\n\`\`\`\n\n`;
+        // Enhanced prompt with safe escaping
+        const enhancedEscaped = escapeForMarkdown(result.enhanced.prompt);
+        if (enhancedEscaped.includes('```')) {
+          markdown += `## Enhanced Prompt\n\n${result.enhanced.prompt}\n\n`;
+        } else {
+          markdown += `## Enhanced Prompt\n\`\`\`\n${result.enhanced.prompt}\n\`\`\`\n\n`;
+        }
+
         markdown += `## Techniques Applied\n\n`;
         result.enhanced.techniques.forEach(t => markdown += `- ${t}\n`);
         markdown += `\n## Key Improvements\n\n`;
@@ -204,18 +227,20 @@ server.registerTool(
         markdown += `*Powered by Claude Sonnet 4.5 API*`;
       }
 
+      // Return with properly formatted content
+      // Don't include structuredContent as it might have serialization issues
       return {
         content: [{
           type: 'text',
           text: markdown,
         }],
-        structuredContent: result,
       };
     } catch (error) {
+      console.error('Enhancement error:', error);
       return {
         content: [{
           type: 'text',
-          text: `Error: ${error.message}`,
+          text: `Error enhancing prompt: ${error.message}\n\nStack: ${error.stack}`,
         }],
         isError: true,
       };

@@ -337,3 +337,4 @@ MIT License - Copyright (c) 2024 ChefToan
 - [GitHub](https://github.com/ChefToan/StackCraft-Copilot)
 - [Get API Key](https://console.anthropic.com/settings/keys)
 - [Claude Code Docs](https://code.claude.com/docs)
+> make a simple server to keep track of local network status/health 

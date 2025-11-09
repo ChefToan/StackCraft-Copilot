@@ -97,13 +97,44 @@ Use AskUserQuestion:
 
 If user says NO → execute original prompt: "{escaped}"
 
-If user says YES → Continue to STEP 2
+If user says YES → Continue to STEP 1.5
+
+## STEP 1.5: Analyze project context (REQUIRED before asking questions)
+
+Before asking any questions, quickly analyze the current project:
+```bash
+# Check for existing tech stack
+ls package.json 2>/dev/null  # Node.js project?
+ls requirements.txt 2>/dev/null  # Python project?
+ls go.mod 2>/dev/null  # Go project?
+ls Cargo.toml 2>/dev/null  # Rust project?
+
+# If found, read it to understand current dependencies
+```
+
+Use this context to:
+- Recommend tech stacks that match existing project
+- Avoid asking about things already clear from context
+- Provide more relevant options
+
+Then → Continue to STEP 2
 
 ## STEP 2: Ask clarifying questions ONE AT A TIME
 
-Based on the prompt type, ask 2-4 targeted questions.
+Based on the prompt type AND project context, ask 2-4 targeted, thoughtful questions.
 
-**IMPORTANT: Ask ONE question, wait for answer, then ask next question.**
+**CRITICAL RULES:**
+1. Ask ONE question, wait for answer, then ask next question
+2. ALWAYS put the RECOMMENDED option FIRST
+3. Mark the recommended option with "(Recommended)" in the label
+4. Only ask questions that significantly impact the implementation
+5. Be thoughtful - don't ask unnecessary questions
+
+**How to determine the recommended option:**
+- Consider: project context, modern best practices, performance, developer experience
+- For tech stacks: Prefer what's in the current project (check package.json), or modern choices
+- For features: Suggest what's commonly needed for that use case
+- For deployment: Suggest simplest option that meets requirements
 
 For "make a website" example:
 ```
@@ -113,7 +144,7 @@ Question 1:
   "header": "Purpose",
   "multiSelect": false,
   "options": [
-    {{"label": "Personal Portfolio", "description": "Showcase your work"}},
+    {{"label": "Personal Portfolio (Recommended)", "description": "Showcase your work - most common use case"}},
     {{"label": "Business/Company", "description": "Professional business site"}},
     {{"label": "E-commerce", "description": "Sell products online"}},
     {{"label": "Blog/Content", "description": "Publishing platform"}}
@@ -122,33 +153,41 @@ Question 1:
 
 [Wait for answer]
 
-Question 2:
+Question 2 (analyzing project context first):
 {{
   "question": "Which technology stack should I use?",
   "header": "Tech Stack",
   "multiSelect": false,
   "options": [
-    {{"label": "Next.js", "description": "React framework with SSR"}},
-    {{"label": "React + Vite", "description": "Fast modern setup"}},
-    {{"label": "Vue + Nuxt", "description": "Vue framework"}}
+    {{"label": "Node.js + Express (Recommended)", "description": "Most versatile, great ecosystem, widely used"}},
+    {{"label": "Python + Flask", "description": "Simple and elegant for smaller projects"}},
+    {{"label": "Bun", "description": "Fastest modern runtime"}},
+    {{"label": "Go", "description": "Best for high-performance needs"}}
   ]
 }}
 
 [Wait for answer]
 
-Question 3:
+Question 3 (only if truly needed):
 {{
   "question": "Which features do you want to enable?",
   "header": "Features",
   "multiSelect": true,
   "options": [
-    {{"label": "Contact Form", "description": "Email contact"}},
+    {{"label": "Contact Form (Recommended)", "description": "Essential for portfolios"}},
+    {{"label": "Dark Mode (Recommended)", "description": "Modern UX standard"}},
     {{"label": "Image Gallery", "description": "Photo showcase"}},
-    {{"label": "Blog Section", "description": "Content management"}},
-    {{"label": "Dark Mode", "description": "Theme toggle"}}
+    {{"label": "Blog Section", "description": "Content management"}}
   ]
 }}
 ```
+
+**Question Selection Guidelines:**
+- For servers: Ask about tech stack (analyze existing project first), monitoring needs, deployment
+- For websites: Ask about purpose, tech stack (check existing setup), key features only
+- For APIs: Ask about data format, auth requirements, tech stack
+- For bug fixes: Ask about error details, reproduction steps, expected behavior
+- Skip obvious questions - if context is clear, don't ask
 
 After collecting all answers → STEP 2.5
 
@@ -185,14 +224,28 @@ If NO → Go back to STEP 2
 
 ## STEP 3: Call Claude API to generate enhanced prompt
 
-Now call the MCP tool with collected information:
+Build a clean, single-line prompt by combining the original request with user answers:
 
-**CRITICAL:** Use the MCP tool `mcp__prompt-enhancer__enhance_prompt`
+**IMPORTANT:** Create a concise summary WITHOUT newlines or special formatting:
+- Original: "{{escaped}}"
+- Include key requirements from user answers in plain text
+- Example: "Create a Node.js/Express server to monitor local network status. Monitor device availability and ping/latency for configurable IPs/hostnames. Include a web dashboard with real-time updates."
 
-If that doesn't work, run the CLI directly:
+Then call the CLI directly (most reliable method):
 ```bash
-cd /Users/toan/Desktop/StackCraft\\ Copilot/mcp-servers/prompt-enhancer && node server.js "{{escaped}}"
+cd /Users/toan/Desktop/StackCraft\\ Copilot/mcp-servers/prompt-enhancer && node server.js "YOUR_CLEAN_SINGLE_LINE_PROMPT_HERE"
 ```
+
+**Why CLI instead of MCP tool?**
+- The MCP tool can have JSON escaping issues with complex prompts
+- CLI is more reliable for prompts with special characters
+- CLI produces identical output
+
+**CRITICAL FORMATTING RULES:**
+1. Keep the prompt as a single continuous text
+2. Don't use bullet points or newlines in the prompt
+3. Use simple comma-separated clauses
+4. Example format: "Create X that does Y. Include features: A, B, C. Use technology: Z."
 
 The API will return an enhanced prompt with:
 - Enhanced version
@@ -243,11 +296,20 @@ Ask if they want to use it:
 - **Use original** → Execute: "{escaped}"
 
 **IMPORTANT RULES:**
-1. Ask questions ONE AT A TIME (not all together)
-2. MUST call Claude API via MCP tool or CLI
-3. MUST show API cost (proves real API usage)
-4. MUST get user confirmation before proceeding
-5. Questions must be specific to the prompt type
+1. ALWAYS analyze project context first (STEP 1.5) before asking questions
+2. Ask questions ONE AT A TIME (not all together)
+3. ALWAYS put recommended option FIRST with "(Recommended)" label
+4. Be thoughtful - only ask questions that truly matter
+5. MUST call Claude API via MCP tool or CLI for enhancement
+6. MUST show API cost (proves real API usage)
+7. MUST get user confirmation before proceeding
+8. Questions must be specific to the prompt type and context
+
+**Examples of thoughtful vs unnecessary questions:**
+✅ GOOD: "Which tech stack?" when building from scratch
+❌ BAD: "Which tech stack?" when package.json already exists (use that!)
+✅ GOOD: "What should the API return?" for API endpoints
+❌ BAD: "Do you want error handling?" (always yes, don't ask)
 
 Begin STEP 1 now.'''
 

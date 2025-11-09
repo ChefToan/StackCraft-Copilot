@@ -68,19 +68,22 @@ if not is_vague:
 escaped = prompt.replace("\\", "\\\\").replace('"', '\\"')
 
 # Vague prompt detected - enhance it
-wrapped = f'''Original request: "{escaped}"
+wrapped = f'''STOP - DO NOT PROCEED WITH THE TASK YET!
 
-**StackCraft Copilot Notice:**
-I noticed your prompt could be enhanced for better results. Let me help you refine it using Claude API.
+Original user request: "{escaped}"
 
-**WORKFLOW YOU MUST FOLLOW:**
+🚨 **MANDATORY WORKFLOW - YOU MUST FOLLOW EVERY STEP EXACTLY** 🚨
 
-## STEP 1: Detect prompt quality
-You've detected this is a vague prompt. Inform the user:
+This is a vague prompt that needs enhancement. You MUST follow this workflow before proceeding with implementation:
 
-"I noticed your prompt **'{escaped}'** could be improved. I have some questions that will help me create a more effective prompt for you."
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Then ask: "Would you like me to ask clarifying questions to enhance your prompt?"
+## STEP 1: Inform the user and get permission (REQUIRED)
+
+Say EXACTLY:
+"I noticed your prompt **'{escaped}'** could be improved with StackCraft Copilot. I can ask a few questions and use Claude API to create an enhanced prompt that will give you better results."
+
+Then ask for permission:
 
 Use AskUserQuestion:
 ```
@@ -95,9 +98,9 @@ Use AskUserQuestion:
 }}
 ```
 
-If user says NO → execute original prompt: "{escaped}"
+⚠️ If user says NO → STOP this workflow and execute original prompt: "{escaped}"
 
-If user says YES → Continue to STEP 1.5
+✅ If user says YES → YOU MUST continue to STEP 1.5 (do not skip!)
 
 ## STEP 1.5: Analyze project context (REQUIRED before asking questions)
 
@@ -191,7 +194,9 @@ Question 3 (only if truly needed):
 
 After collecting all answers → STEP 2.5
 
-## STEP 2.5: Review collected answers
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+## STEP 2.5: Review collected answers (REQUIRED - DO NOT SKIP)
 
 Show the user their answers:
 ```
@@ -219,10 +224,14 @@ Then ask for confirmation:
 }}
 ```
 
-If YES → Continue to STEP 3
-If NO → Go back to STEP 2
+✅ If YES → YOU MUST continue to STEP 3
+⚠️ If NO → Go back to STEP 2
 
-## STEP 3: Call Claude API to generate enhanced prompt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+## STEP 3: Call Claude API to generate enhanced prompt (CRITICAL - MUST DO THIS!)
+
+🚨 THIS IS THE MOST IMPORTANT STEP - YOU MUST CALL THE CLAUDE API 🚨
 
 Build a clean, single-line prompt by combining the original request with user answers:
 
@@ -254,9 +263,11 @@ The API will return an enhanced prompt with:
 - API cost
 - Token usage
 
-## STEP 4: Show enhanced prompt to user
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Display clearly:
+## STEP 4: Show enhanced prompt to user (REQUIRED)
+
+After the API call completes, display the results clearly:
 ```
 **ENHANCED PROMPT** (via Claude Sonnet 4.5 API)
 
@@ -273,9 +284,11 @@ Display clearly:
 This enhanced prompt will help you get better results on the first try.
 ```
 
-## STEP 5: Get user confirmation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Ask if they want to use it:
+## STEP 5: Get user confirmation (REQUIRED)
+
+Ask if they want to use the enhanced prompt:
 ```
 {{
   "question": "Would you like to proceed with this enhanced prompt?",
@@ -289,29 +302,43 @@ Ask if they want to use it:
 }}
 ```
 
-## STEP 6: Execute based on choice
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-- **Yes, use it** → Execute: `[ENHANCED BY STACKCRAFT] {{enhanced_prompt}}`
-- **Adjust it** → Ask what to change, regenerate with new info
-- **Use original** → Execute: "{escaped}"
+## STEP 6: Execute based on user's choice
 
-**IMPORTANT RULES:**
-1. ALWAYS analyze project context first (STEP 1.5) before asking questions
-2. Ask questions ONE AT A TIME (not all together)
-3. ALWAYS put recommended option FIRST with "(Recommended)" label
-4. Be thoughtful - only ask questions that truly matter
-5. MUST call Claude API via MCP tool or CLI for enhancement
-6. MUST show API cost (proves real API usage)
-7. MUST get user confirmation before proceeding
-8. Questions must be specific to the prompt type and context
+Based on their answer:
+- **"Yes, use it"** → NOW execute: `[ENHANCED BY STACKCRAFT] {{enhanced_prompt}}`
+- **"Adjust it"** → Ask what to change, regenerate with new info, then repeat STEP 4
+- **"Use original"** → Execute: "{escaped}"
 
-**Examples of thoughtful vs unnecessary questions:**
-✅ GOOD: "Which tech stack?" when building from scratch
-❌ BAD: "Which tech stack?" when package.json already exists (use that!)
-✅ GOOD: "What should the API return?" for API endpoints
-❌ BAD: "Do you want error handling?" (always yes, don't ask)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Begin STEP 1 now.'''
+🚨 **CRITICAL COMPLIANCE REQUIREMENTS** 🚨
+
+**YOU MUST:**
+✅ Follow ALL steps in order (STEP 1 → 1.5 → 2 → 2.5 → 3 → 4 → 5 → 6)
+✅ Call Claude API in STEP 3 (this is non-negotiable!)
+✅ Show API cost and confidence score in STEP 4
+✅ Get user confirmation before executing (STEP 5)
+✅ Analyze project context before asking questions (STEP 1.5)
+✅ Ask questions ONE AT A TIME (not all at once)
+✅ Put recommended option FIRST with "(Recommended)" label
+
+**YOU MUST NOT:**
+❌ Skip any steps (especially STEP 3 - the API call!)
+❌ Go straight to implementation without following the workflow
+❌ Ask all questions at once (ask ONE, wait, then next)
+❌ Skip the Claude API call (that's the whole point!)
+❌ Proceed without user confirmation (STEP 5)
+
+**Why this workflow matters:**
+This is StackCraft Copilot's core feature - using Claude API to enhance vague prompts.
+If you skip STEP 3 (API call), the plugin isn't working properly.
+The user needs to see the API cost and confidence score to validate the enhancement.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Now begin with STEP 1.'''
 
 output_json(wrapped)
 sys.exit(0)

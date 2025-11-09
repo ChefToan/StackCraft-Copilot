@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "displayName": "StackCraft Copilot",
   "description": "AI-powered website tech stack analyzer with intelligent prompt engineering. Detects frameworks, libraries, and architecture patterns from any live website.",
-  "author": "Your Name",
-  "repository": "https://github.com/yourusername/stackcraft-copilot",
+  "author": "ChefToan",
+  "repository": "https://github.com/ChefToan/StackCraft-Copilot",
   "license": "MIT",
   "keywords": [
     "web-development",

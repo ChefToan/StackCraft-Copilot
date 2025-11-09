@@ -5,8 +5,9 @@
 *.swo
 *~
 
-# Claude Code local files
+# Claude Code local files (but keep .claude-plugin/ for marketplace)
 .claude/
+!.claude-plugin/
 
 # Documentation files (keep only README.md for GitHub)
 DEMO_GUIDE.md

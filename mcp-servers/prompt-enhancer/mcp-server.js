@@ -148,15 +148,15 @@ server.registerTool(
     outputSchema: {
       success: z.boolean(),
       original: z.string(),
-      needsClarification: z.boolean().optional(),
-      clarificationQuestions: z.array(z.string()).optional(),
+      needsClarification: z.boolean().optional().nullable(),
+      clarificationQuestions: z.array(z.string()).optional().nullable(),
       enhanced: z.object({
         prompt: z.string(),
         techniques: z.array(z.string()),
         improvements: z.array(z.string()),
         confidence: z.number(),
-      }).optional(),
-      explanation: z.string().optional(),
+      }).optional().nullable(),
+      explanation: z.string().optional().nullable(),
       usage: z.object({
         inputTokens: z.number(),
         outputTokens: z.number(),

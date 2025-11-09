@@ -125,13 +125,43 @@ Question 3:
     {{"label": "Contact Form", "description": "Email contact"}},
     {{"label": "Image Gallery", "description": "Photo showcase"}},
     {{"label": "Blog Section", "description": "Content management"}},
-    {{"label": "Dark Mode", "description": "Theme toggle"}},
-    {{"label": "Animations", "description": "Smooth transitions"}}
+    {{"label": "Dark Mode", "description": "Theme toggle"}}
   ]
 }}
 ```
 
-After collecting all answers → STEP 3
+After collecting all answers → STEP 2.5
+
+## STEP 2.5: Review collected answers
+
+Show the user their answers:
+```
+**Review your answers:**
+
+● [Question 1 text]
+  → [Answer 1]
+
+● [Question 2 text]
+  → [Answer 2]
+
+... (all questions and answers)
+```
+
+Then ask for confirmation:
+```
+{{
+  "question": "Ready to enhance your prompt with these answers?",
+  "header": "Confirm",
+  "multiSelect": false,
+  "options": [
+    {{"label": "Yes, enhance it", "description": "Call Claude API to create enhanced prompt"}},
+    {{"label": "No, start over", "description": "Ask questions again"}}
+  ]
+}}
+```
+
+If YES → Continue to STEP 3
+If NO → Go back to STEP 2
 
 ## STEP 3: Call Claude API to generate enhanced prompt
 

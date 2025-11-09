@@ -1,7 +1,5 @@
 {
   "name": "stackcraft-copilot-marketplace",
-  "version": "1.0.0",
-  "description": "Official marketplace for StackCraft Copilot - Claude API-powered prompt enhancement tool",
   "owner": {
     "name": "ChefToan",
     "url": "https://github.com/ChefToan"
@@ -9,26 +7,7 @@
   "plugins": [
     {
       "name": "stackcraft-copilot",
-      "displayName": "StackCraft Copilot",
-      "version": "0.1.0",
-      "description": "Claude API-powered prompt enhancement tool that helps developers write better prompts using prompt engineering techniques. Improves productivity through better AI interaction.",
-      "author": {
-        "name": "ChefToan",
-        "url": "https://github.com/ChefToan"
-      },
-      "source": {
-        "type": "git",
-        "url": "https://github.com/ChefToan/StackCraft-Copilot.git"
-      },
-      "keywords": [
-        "web-development",
-        "tech-stack-analysis",
-        "reverse-engineering",
-        "prompt-engineering",
-        "framework-detection",
-        "component-detection"
-      ],
-      "category": "Web Development"
+      "source": "https://github.com/ChefToan/StackCraft-Copilot.git"
     }
   ]
 }

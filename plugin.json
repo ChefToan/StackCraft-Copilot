@@ -13,20 +13,6 @@
     "ai-assistance",
     "prompt-improvement"
   ],
-  "agents": [
-    {
-      "name": "prompt-sage",
-      "path": "./agents/prompt-sage",
-      "description": "Intelligent prompt engineering assistant that refines vague requests into detailed, effective prompts using Claude API"
-    }
-  ],
-  "commands": [
-    {
-      "name": "enhance-prompt",
-      "path": "./commands/enhance-prompt.md",
-      "description": "Enhance any prompt using Claude API and prompt engineering best practices"
-    }
-  ],
   "mcpServers": [
     {
       "name": "prompt-enhancer",
@@ -39,5 +25,8 @@
   },
   "engines": {
     "claudeCode": ">=0.1.0"
+  },
+  "scripts": {
+    "postInstall": "bash scripts/setup.sh"
   }
 }

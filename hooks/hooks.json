@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "description": "Enhances vague prompts using Claude API before execution",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/enhance-prompt-hook.py",
+            "description": "StackCraft Copilot - Claude API prompt enhancer"
+          }
+        ]
+      }
+    ]
+  }
+}

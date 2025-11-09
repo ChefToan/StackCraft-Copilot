@@ -1,8 +1,25 @@
 # StackCraft Copilot
 
-**Claude API-powered prompt enhancement plugin**
+**Claude API-powered automatic prompt enhancement**
 
-Automatically enhances vague prompts using real Claude Sonnet 4.5 API calls before execution.
+Automatically intercepts vague prompts and enhances them using Claude Sonnet 4.5 API.
+
+---
+
+## How It Works
+
+**Automatic Workflow:**
+
+1. You type a vague prompt: `make a website`
+2. Hook detects it's vague and intercepts
+3. Asks: "I noticed your prompt could be improved. Would you like clarifying questions?"
+4. If yes → asks targeted questions ONE AT A TIME
+5. After answers → calls Claude API to generate enhanced prompt
+6. Shows enhanced version with API cost proof
+7. Asks: "Proceed with this enhanced prompt?"
+8. If yes → executes enhanced version, if no → adjusts or uses original
+
+**No slash commands needed** - just type naturally and the hook handles everything.
 
 ---
 
@@ -10,151 +27,189 @@ Automatically enhances vague prompts using real Claude Sonnet 4.5 API calls befo
 
 **Requirement:** Build a Claude API-powered tool that improves developer productivity
 
-**Our Implementation:**
-- Uses Claude API directly via `@anthropic-ai/sdk`
-- Proves API usage by showing real costs ($0.005-0.015 per call)
-- Displays token counts (input/output)
-- Improves productivity through better first-try results
+**Proof of Claude API usage:**
+- Shows real API cost: $0.005-0.015 per enhancement
+- Displays token counts: input/output
+- Uses `@anthropic-ai/sdk` for direct API calls
+- User pays with their own API key
 
-**Evidence shown to user:**
+**Example output:**
 ```
 API Cost: $0.007234
-Tokens: 342 in, 976 out
+Tokens: 342 input, 976 output
 Powered by Claude Sonnet 4.5 API
 ```
 
 ---
 
-## How It Works
+## Installation
 
-```
-User types: "make a website"
-    ↓
-Hook intercepts (vague prompt detected)
-    ↓
-Calls Claude API via MCP tool (REAL API CALL)
-    ↓
-API returns clarifying questions
-    ↓
-User answers questions one at a time
-    ↓
-Shows enhanced prompt with API cost
-    ↓
-User confirms or modifies
-    ↓
-Executes with enhanced prompt
-```
-
-**Key difference:** Makes real Claude API calls (costs money, shows proof). Other tools just wrap prompts (free, no API).
-
----
-
-## Features
-
-- Automatic vague prompt detection
-- Step-by-step clarifying questions
-- User confirmation required before proceeding
-- 8 specialized templates (debug, code-review, refactor, architecture, optimize, test, api, security)
-- Real-time cost tracking
-- Confidence scoring (1-10)
-- Token usage analytics
-
----
-
-## Quick Start
-
-### 1. Install
+### Option 1: Automatic Setup (Recommended)
 
 ```bash
+# Clone the repository
 git clone https://github.com/ChefToan/StackCraft-Copilot.git ~/.claude/plugins/stackcraft-copilot
+
+# Run setup script
+cd ~/.claude/plugins/stackcraft-copilot
+bash scripts/setup.sh
+```
+
+The setup script will:
+- Install MCP server dependencies (`npm install`)
+- Create `.env` file from template
+- Configure the hook
+- Test the installation
+
+**Then:**
+1. Edit `.env` and add your Anthropic API key
+2. Restart Claude Code
+
+### Option 2: Manual Setup
+
+```bash
+# Clone repository
+git clone https://github.com/ChefToan/StackCraft-Copilot.git ~/.claude/plugins/stackcraft-copilot
+
+# Install dependencies
 cd ~/.claude/plugins/stackcraft-copilot/mcp-servers/prompt-enhancer
 npm install
+
+# Create .env file
+cd ~/.claude/plugins/stackcraft-copilot
+cp .env.example .env
+nano .env  # Add your API key
+
+# Make hook executable
+chmod +x scripts/enhance-prompt-hook.py
+
+# Restart Claude Code
 ```
 
-### 2. Add API Key
+### Get API Key
 
-Users must provide their own Anthropic API key:
-
-```bash
-cp ~/.claude/plugins/stackcraft-copilot/.env.example ~/.claude/plugins/stackcraft-copilot/.env
-nano ~/.claude/plugins/stackcraft-copilot/.env
-# Add: ANTHROPIC_API_KEY=sk-ant-your-key-here
-```
-
-Get your API key: https://console.anthropic.com/settings/keys
-
-### 3. Restart Claude Code
-
-The hook activates automatically.
+Sign up at https://console.anthropic.com/settings/keys
 
 ---
 
 ## Usage Example
 
-**Input:**
+**You type:**
 ```
 make a website
 ```
 
 **What happens:**
+
 ```
-StackCraft Copilot enhancing via Claude API...
+[Hook intercepts]
 
-Question 1/3: What type of website?
-  - Portfolio
+I noticed your prompt "make a website" could be improved.
+I have some questions that will help create a more effective prompt.
+
+Would you like to enhance this prompt with clarifying questions?
+  - Yes, ask questions
+  - No, use as-is
+
+[You select: Yes, ask questions]
+
+Question 1/3: What is the primary purpose of this website?
+  - Personal Portfolio
+  - Business/Company
   - E-commerce
-  - Blog
-  - Other
+  - Blog/Content
 
-[User selects: Portfolio]
+[You answer: Personal Portfolio]
 
-Question 2/3: Framework preference?
-  - React + Next.js
+Question 2/3: Which technology stack should I use?
+  - Next.js
+  - React + Vite
   - Vue + Nuxt
-  - Other
 
-[User selects: React + Next.js]
+[You answer: Next.js]
 
-Question 3/3: Key features needed? (select multiple)
-  - Contact form
-  - Project gallery
-  - Blog section
-  - Other
+Question 3/3: Which features do you want to enable? (select multiple)
+  - Contact Form
+  - Image Gallery
+  - Blog Section
+  - Dark Mode
+  - Animations
 
-[User selects multiple features]
+[You select: Image Gallery, Dark Mode, Animations]
+
+[Calls Claude API...]
 
 ENHANCED PROMPT (via Claude Sonnet 4.5 API)
 
-Create a professional portfolio website using React and Next.js:
-1. Responsive project gallery with filtering
-2. Contact form with email integration
-3. Blog section with MDX support
-4. Dark/light mode toggle
-5. SEO optimized, page loads under 2s, WCAG 2.1 AA compliant
+Create a modern personal portfolio website using Next.js 14 with:
 
-Techniques applied: Role Assignment, Context Addition, Step-by-Step Structure
-Confidence: 9/10
-API Cost: $0.007234
-Tokens: 342 input, 976 output
+1. Technology Stack:
+   - Next.js 14 (App Router)
+   - React 18
+   - Tailwind CSS
+   - TypeScript
 
-Proceed with this enhanced prompt?
+2. Core Features:
+   - Responsive image gallery with lightbox
+   - Dark/light mode toggle with system preference detection
+   - Smooth page transitions and scroll animations
+   - Mobile-first responsive design
+
+3. Structure:
+   - Hero section with introduction
+   - Projects gallery with filtering
+   - About section
+   - Contact information
+
+4. Technical Requirements:
+   - Fast page loads (< 2s)
+   - SEO optimized with metadata
+   - Accessible (WCAG 2.1 AA)
+   - Performance score > 90
+
+Enhancements Applied:
+- Role assignment (senior developer)
+- Context addition (technical specifications)
+- Step-by-step structure
+- Output specification (deliverables)
+
+Quality Metrics:
+- Confidence: 9/10
+- API Cost: $0.007234
+- Tokens: 342 input, 976 output
+
+Would you like to proceed with this enhanced prompt?
   - Yes, use it
-  - Modify it
-  - Skip enhancement
+  - Adjust it
+  - Use original
 
-[User confirms and Claude proceeds with enhanced prompt]
+[You select: Yes, use it]
+
+[ENHANCED BY STACKCRAFT] Create a modern personal portfolio...
+[Claude proceeds with enhanced prompt]
 ```
+
+---
+
+## Features
+
+- **Automatic detection** - No commands needed, just type naturally
+- **Smart questioning** - One question at a time, context-aware
+- **Real Claude API calls** - Direct integration with Anthropic API
+- **Cost transparency** - Shows actual API costs
+- **User confirmation** - Always asks before proceeding
+- **8 specialized templates** - Auto-selected based on prompt type
 
 ---
 
 ## Bypass Enhancement
 
-Skip enhancement by prefixing with `*`:
+**Skip enhancement** with `*` prefix:
 ```
 * make a website
 ```
 
-Slash commands automatically bypass:
+**Slash commands** auto-bypass:
 ```
 /help
 ```
@@ -163,50 +218,47 @@ Slash commands automatically bypass:
 
 ## API Costs
 
-**Pricing:** Claude Sonnet 4.5 = $3 per 1M input tokens, $15 per 1M output tokens
+**Pricing:** $3/$15 per 1M tokens (input/output)
 
-**Typical costs per enhancement:**
-- Simple prompt: $0.005 - $0.008
-- With template: $0.010 - $0.015
-- Complex enhancement: $0.015 - $0.025
+**Per enhancement:**
+- Simple: $0.005 - $0.008
+- With context: $0.010 - $0.015
+- Complex: $0.015 - $0.025
 
-**Example:** 100 enhancements per month costs approximately $1.00
+**Monthly estimate:** 100 enhancements ≈ $1.00
 
 ---
 
 ## Templates
 
-Specialized enhancement for different scenarios:
+Auto-selected based on prompt type:
 
-- **debug** - Systematic debugging approach
-- **code-review** - Comprehensive code review
-- **refactor** - Safe refactoring guidance
-- **architecture** - System design patterns
-- **optimize** - Performance improvements
-- **test** - Testing strategy
-- **api** - RESTful API design
-- **security** - Security audit
+- **debug** - Systematic debugging
+- **code-review** - Code quality review
+- **refactor** - Safe code improvements
+- **architecture** - System design
+- **optimize** - Performance tuning
+- **test** - Testing strategies
+- **api** - API development
+- **security** - Security assessment
 
 ---
 
-## CLI Mode
+## CLI Testing
 
-Test enhancement directly from command line:
+Test enhancement manually:
 
 ```bash
 cd ~/.claude/plugins/stackcraft-copilot/mcp-servers/prompt-enhancer
 
-# Basic enhancement
+# Basic test
 node server.js "make a website"
 
 # With template
-node server.js --template debug "fix the error"
+node server.js --template debug "fix error"
 
-# View usage statistics
+# View stats
 node server.js --stats
-
-# List all templates
-node server.js --list-templates
 ```
 
 ---
@@ -214,33 +266,64 @@ node server.js --list-templates
 ## Architecture
 
 ```
-User Input
+User types: "make a website"
     ↓
-Hook (enhance-prompt-hook.py)
+Hook intercepts (enhance-prompt-hook.py)
     ↓
-Claude Code Session
+Wraps with enhancement workflow
     ↓
-MCP Tool Call (mcp__prompt-enhancer__enhance_prompt)
+Claude asks clarifying questions
     ↓
-MCP Server (mcp-server.js)
+Collects user answers
     ↓
-Claude API Call (@anthropic-ai/sdk) ← REAL API CALL
+Calls MCP tool
     ↓
-Response with cost and token counts
+MCP server calls Claude API (@anthropic-ai/sdk) ← REAL $ API CALL
     ↓
-Display to user
+Returns enhanced prompt + cost
+    ↓
+Shows to user for confirmation
+    ↓
+Executes enhanced version
 ```
 
 ---
 
-## Proof of Claude API Usage
+## Troubleshooting
 
-Every enhancement displays:
-1. **API Cost** - Actual dollar amount charged to user's API key
-2. **Token Counts** - Input and output tokens processed
-3. **Model Information** - "Powered by Claude Sonnet 4.5 API"
+**"No MCP servers configured" error?**
+- Run the setup script: `bash ~/.claude/plugins/stackcraft-copilot/scripts/setup.sh`
+- Ensure `.env` file exists with your API key
+- Restart Claude Code completely (quit and reopen)
+- Check dependencies installed: `ls ~/.claude/plugins/stackcraft-copilot/mcp-servers/prompt-enhancer/node_modules`
 
-This proves real API calls are made, not just prompt wrapping.
+**Hook not intercepting prompts?**
+- Verify hook file exists: `ls ~/.claude/plugins/stackcraft-copilot/hooks/hooks.json`
+- Make script executable: `chmod +x ~/.claude/plugins/stackcraft-copilot/scripts/enhance-prompt-hook.py`
+- Restart Claude Code
+- Try with `*` bypass to test: `* make a website` (should NOT trigger hook)
+
+**MCP tool not found during enhancement?**
+- Ensure API key is in `.env` file: `cat ~/.claude/plugins/stackcraft-copilot/.env`
+- Run manual test: `cd ~/.claude/plugins/stackcraft-copilot/mcp-servers/prompt-enhancer && node server.js "test"`
+- Check for errors in terminal
+- Verify Node.js version: `node --version` (need >= 18.0.0)
+
+**No API cost shown?**
+- This means API wasn't called
+- Check API key is valid at https://console.anthropic.com/settings/keys
+- Test CLI mode directly: `node server.js "make a website"`
+- Look for error messages in Claude Code console
+
+**Still not working?**
+- Delete and reinstall:
+  ```bash
+  rm -rf ~/.claude/plugins/stackcraft-copilot
+  git clone https://github.com/ChefToan/StackCraft-Copilot.git ~/.claude/plugins/stackcraft-copilot
+  cd ~/.claude/plugins/stackcraft-copilot
+  bash scripts/setup.sh
+  ```
+- Check GitHub issues: https://github.com/ChefToan/StackCraft-Copilot/issues
 
 ---
 
@@ -251,6 +334,6 @@ MIT License - Copyright (c) 2024 ChefToan
 ---
 
 **Links:**
-- [GitHub Repository](https://github.com/ChefToan/StackCraft-Copilot)
+- [GitHub](https://github.com/ChefToan/StackCraft-Copilot)
 - [Get API Key](https://console.anthropic.com/settings/keys)
-- [Claude Code Documentation](https://code.claude.com/docs)
+- [Claude Code Docs](https://code.claude.com/docs)

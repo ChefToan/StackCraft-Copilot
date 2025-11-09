@@ -9,7 +9,6 @@
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { z } from 'zod';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -149,19 +148,21 @@ server.setRequestHandler('tools/list', async () => {
       {
         name: 'enhance_prompt',
         description: 'Enhance a developer prompt using Claude API and prompt engineering best practices. Transforms vague prompts into highly effective ones with role assignment, context, structure, and clear specifications.',
-        inputSchema: z.object({
-          prompt: z.string().describe('The original prompt to enhance'),
-          template: z.enum([
-            'debug',
-            'code-review',
-            'refactor',
-            'architecture',
-            'optimize',
-            'test',
-            'api',
-            'security'
-          ]).optional().describe('Optional template to apply (debug, code-review, refactor, architecture, optimize, test, api, security)'),
-        }).passthrough(),
+        inputSchema: {
+          type: 'object',
+          properties: {
+            prompt: {
+              type: 'string',
+              description: 'The original prompt to enhance'
+            },
+            template: {
+              type: 'string',
+              enum: ['debug', 'code-review', 'refactor', 'architecture', 'optimize', 'test', 'api', 'security'],
+              description: 'Optional template to apply (debug, code-review, refactor, architecture, optimize, test, api, security)'
+            }
+          },
+          required: ['prompt']
+        },
       },
     ],
   };

@@ -2,10 +2,7 @@
   "mcpServers": {
     "prompt-enhancer": {
       "command": "node",
-      "args": ["mcp-server.js"],
-      "env": {
-        "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
-      }
+      "args": ["mcp-server.js"]
     }
   }
 }

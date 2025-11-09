@@ -10,6 +10,7 @@
 !.claude-plugin/
 
 # Documentation files (keep only README.md for GitHub)
+docs/
 DEMO_GUIDE.md
 HACKATHON_CHECKLIST.md
 
@@ -28,6 +29,9 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 yarn.lock
+
+# Cost tracking logs
+mcp-servers/prompt-enhancer/enhancement-log.jsonl
 
 # Build outputs
 dist/

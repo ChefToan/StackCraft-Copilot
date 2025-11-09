@@ -1,47 +1,37 @@
 {
   "name": "stackcraft-copilot",
-  "version": "0.1.0",
-  "displayName": "StackCraft Copilot",
-  "description": "AI-powered website tech stack analyzer with intelligent prompt engineering. Detects frameworks, libraries, and architecture patterns from any live website.",
+  "version": "0.2.0",
+  "displayName": "StackCraft Copilot - Prompt Enhancer",
+  "description": "Claude API-powered prompt enhancement tool that helps developers write better prompts using prompt engineering techniques. Improves productivity through better AI interaction.",
   "author": "ChefToan",
   "repository": "https://github.com/ChefToan/StackCraft-Copilot",
   "license": "MIT",
   "keywords": [
-    "web-development",
-    "tech-stack-analysis",
-    "reverse-engineering",
+    "claude-api",
     "prompt-engineering",
-    "framework-detection"
+    "developer-productivity",
+    "ai-assistance",
+    "prompt-improvement"
   ],
   "agents": [
     {
       "name": "prompt-sage",
       "path": "./agents/prompt-sage",
-      "description": "Intelligent prompt engineering assistant that refines vague requests into detailed, effective prompts"
-    },
-    {
-      "name": "stack-detective",
-      "path": "./agents/stack-detective",
-      "description": "Advanced tech stack analyzer that detects frameworks, libraries, CSS approaches, and architectural patterns from websites"
+      "description": "Intelligent prompt engineering assistant that refines vague requests into detailed, effective prompts using Claude API"
     }
   ],
   "commands": [
     {
-      "name": "analyze-site",
-      "path": "./commands/analyze-site.md",
-      "description": "Analyze a website's tech stack with guided prompt refinement"
-    },
-    {
-      "name": "quick-analyze",
-      "path": "./commands/quick-analyze.md",
-      "description": "Quick analysis without prompt refinement (for experienced users)"
+      "name": "enhance-prompt",
+      "path": "./commands/enhance-prompt.md",
+      "description": "Enhance any prompt using Claude API and prompt engineering best practices"
     }
   ],
   "mcpServers": [
     {
-      "name": "web-analyzer",
-      "path": "./mcp-servers/web-analyzer",
-      "description": "MCP server for fetching and analyzing website HTML, CSS, and JavaScript"
+      "name": "prompt-enhancer",
+      "path": "./mcp-servers/prompt-enhancer",
+      "description": "Claude API-powered MCP server for prompt enhancement"
     }
   ],
   "dependencies": {

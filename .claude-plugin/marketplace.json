@@ -1,16 +1,25 @@
 {
-  "name": "StackCraft Copilot Marketplace",
+  "name": "stackcraft-copilot-marketplace",
   "version": "1.0.0",
-  "description": "Official marketplace for StackCraft Copilot - AI-powered website tech stack analyzer",
+  "description": "Official marketplace for StackCraft Copilot - Claude API-powered prompt enhancement tool",
+  "owner": {
+    "name": "ChefToan",
+    "url": "https://github.com/ChefToan"
+  },
   "plugins": [
     {
-      "id": "stackcraft-copilot",
-      "name": "StackCraft Copilot",
+      "name": "stackcraft-copilot",
+      "displayName": "StackCraft Copilot",
       "version": "0.1.0",
-      "description": "AI-powered website tech stack analyzer with intelligent prompt engineering. Detects frameworks, libraries, and architecture patterns from any live website.",
-      "author": "ChefToan",
-      "repository": "https://github.com/ChefToan/StackCraft-Copilot",
-      "installPath": ".",
+      "description": "Claude API-powered prompt enhancement tool that helps developers write better prompts using prompt engineering techniques. Improves productivity through better AI interaction.",
+      "author": {
+        "name": "ChefToan",
+        "url": "https://github.com/ChefToan"
+      },
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ChefToan/StackCraft-Copilot.git"
+      },
       "keywords": [
         "web-development",
         "tech-stack-analysis",
@@ -19,14 +28,7 @@
         "framework-detection",
         "component-detection"
       ],
-      "category": "Web Development",
-      "features": [
-        "Intelligent prompt engineering with Prompt Sage agent",
-        "Component-level detection (shadcn/ui, Radix UI, Material-UI, etc.)",
-        "50+ technology detection across 10+ categories",
-        "Official documentation links for every detected technology",
-        "Dual-mode experience: Guided analysis & Quick analysis"
-      ]
+      "category": "Web Development"
     }
   ]
 }

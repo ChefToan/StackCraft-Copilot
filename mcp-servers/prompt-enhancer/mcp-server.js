@@ -7,12 +7,13 @@
  * Exposes prompt enhancement as an MCP tool for Claude Code integration
  */
 
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import Anthropic from '@anthropic-ai/sdk';
+import { z } from 'zod';
 import { logEnhancement } from './cost-tracker.js';
 import { getTemplate } from './templates.js';
 
@@ -128,56 +129,51 @@ Enhance this prompt using prompt engineering best practices.`;
   return result;
 }
 
-// Create MCP server
-const server = new Server(
-  {
-    name: 'prompt-enhancer',
-    version: '0.2.0',
-  },
-  {
-    capabilities: {
-      tools: {},
-    },
-  }
-);
-
-// Define the enhance_prompt tool
-server.setRequestHandler('tools/list', async () => {
-  return {
-    tools: [
-      {
-        name: 'enhance_prompt',
-        description: 'Enhance a developer prompt using Claude API and prompt engineering best practices. Transforms vague prompts into highly effective ones with role assignment, context, structure, and clear specifications.',
-        inputSchema: {
-          type: 'object',
-          properties: {
-            prompt: {
-              type: 'string',
-              description: 'The original prompt to enhance'
-            },
-            template: {
-              type: 'string',
-              enum: ['debug', 'code-review', 'refactor', 'architecture', 'optimize', 'test', 'api', 'security'],
-              description: 'Optional template to apply (debug, code-review, refactor, architecture, optimize, test, api, security)'
-            }
-          },
-          required: ['prompt']
-        },
-      },
-    ],
-  };
+// Create MCP server using recommended McpServer API
+const server = new McpServer({
+  name: 'prompt-enhancer',
+  version: '0.2.0',
 });
 
-// Handle tool calls
-server.setRequestHandler('tools/call', async (request) => {
-  if (request.params.name === 'enhance_prompt') {
-    const { prompt, template } = request.params.arguments;
-
+// Register the enhance_prompt tool
+server.registerTool(
+  'enhance_prompt',
+  {
+    title: 'Enhance Prompt',
+    description: 'Enhance a developer prompt using Claude API and prompt engineering best practices. Transforms vague prompts into highly effective ones with role assignment, context, structure, and clear specifications.',
+    inputSchema: {
+      prompt: z.string().describe('The original prompt to enhance'),
+      template: z.enum(['debug', 'code-review', 'refactor', 'architecture', 'optimize', 'test', 'api', 'security']).optional().describe('Optional template to apply (debug, code-review, refactor, architecture, optimize, test, api, security)'),
+    },
+    outputSchema: {
+      success: z.boolean(),
+      original: z.string(),
+      needsClarification: z.boolean().optional(),
+      clarificationQuestions: z.array(z.string()).optional(),
+      enhanced: z.object({
+        prompt: z.string(),
+        techniques: z.array(z.string()),
+        improvements: z.array(z.string()),
+        confidence: z.number(),
+      }).optional(),
+      explanation: z.string().optional(),
+      usage: z.object({
+        inputTokens: z.number(),
+        outputTokens: z.number(),
+        cost: z.object({
+          input: z.string(),
+          output: z.string(),
+          total: z.string(),
+        }),
+      }),
+    },
+  },
+  async ({ prompt, template }) => {
     if (!process.env.ANTHROPIC_API_KEY) {
       return {
         content: [{
           type: 'text',
-          text: '❌ Error: ANTHROPIC_API_KEY environment variable not set. Please add your API key to the .env file.',
+          text: 'Error: ANTHROPIC_API_KEY environment variable not set. Please add your API key to the .env file.',
         }],
         isError: true,
       };
@@ -187,23 +183,23 @@ server.setRequestHandler('tools/call', async (request) => {
       const result = await enhancePrompt(prompt, template);
 
       // Format result as markdown
-      let markdown = `# ✨ Prompt Enhancement Results\n\n`;
+      let markdown = `# Prompt Enhancement Results\n\n`;
       markdown += `## Original Prompt\n\`\`\`\n${result.original}\n\`\`\`\n\n`;
 
       if (result.needsClarification) {
-        markdown += `## ⚠️ Clarification Needed\n\n`;
+        markdown += `## Clarification Needed\n\n`;
         markdown += `To provide the best enhancement, please answer:\n\n`;
         result.clarificationQuestions.forEach((q, i) => {
           markdown += `${i + 1}. ${q}\n`;
         });
       } else {
-        markdown += `## 🎯 Enhanced Prompt\n\`\`\`\n${result.enhanced.prompt}\n\`\`\`\n\n`;
-        markdown += `## 📋 Techniques Applied\n\n`;
+        markdown += `## Enhanced Prompt\n\`\`\`\n${result.enhanced.prompt}\n\`\`\`\n\n`;
+        markdown += `## Techniques Applied\n\n`;
         result.enhanced.techniques.forEach(t => markdown += `- ${t}\n`);
-        markdown += `\n## 💡 Key Improvements\n\n`;
+        markdown += `\n## Key Improvements\n\n`;
         result.enhanced.improvements.forEach(imp => markdown += `- ${imp}\n`);
-        markdown += `\n## 📊 Confidence: ${result.enhanced.confidence}/10\n\n`;
-        markdown += `## 📝 Explanation\n\n${result.explanation}\n\n`;
+        markdown += `\n## Confidence: ${result.enhanced.confidence}/10\n\n`;
+        markdown += `## Explanation\n\n${result.explanation}\n\n`;
         markdown += `---\n\n**API Usage:** Input: ${result.usage.inputTokens} tokens | Output: ${result.usage.outputTokens} tokens | Cost: $${result.usage.cost.total}\n\n`;
         markdown += `*Powered by Claude Sonnet 4.5 API*`;
       }
@@ -213,21 +209,19 @@ server.setRequestHandler('tools/call', async (request) => {
           type: 'text',
           text: markdown,
         }],
-        isError: false,
+        structuredContent: result,
       };
     } catch (error) {
       return {
         content: [{
           type: 'text',
-          text: `❌ Error: ${error.message}`,
+          text: `Error: ${error.message}`,
         }],
         isError: true,
       };
     }
   }
-
-  throw new Error(`Unknown tool: ${request.params.name}`);
-});
+);
 
 // Start the server
 async function main() {
